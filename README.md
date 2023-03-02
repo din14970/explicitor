@@ -135,7 +135,7 @@ safe_func: Callable[[int], Result[int, ValueError]] = unraise(function)
 In Rust, there is the handy `?` operator, which allows you to quickly return an `Err` from a function or continue if the result is an `Ok`.
 In Python, the equivalent might be:
 
-```
+```python
 result: Result = function()
 
 if result.is_err():
