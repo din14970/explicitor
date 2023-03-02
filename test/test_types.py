@@ -102,8 +102,24 @@ def test_unraise() -> None:
             raise ValueError("too small")
         return x + 1
 
-    result_ok: Result = unraise(raises_exception)(20)
-    result_err: Result = unraise(raises_exception)(5)
+    result_ok: Result[int, ValueError] = unraise(raises_exception)(20)
+    result_err: Result[int, ValueError] = unraise(raises_exception)(5)
+
+    assert result_ok.unwrap() == 21
+    assert result_err == Err(ValueError("too small"))
+
+
+def test_unraise_method() -> None:
+
+    class Dummy:
+        @unraise
+        def raises_exception(self, x: int) -> int:
+            if x < 10:
+                raise ValueError("too small")
+            return x + 1
+
+    result_ok: Result[int, ValueError] = Dummy().raises_exception(20)
+    result_err: Result[int, ValueError] = Dummy().raises_exception(5)
 
     assert result_ok.unwrap() == 21
     assert result_err == Err(ValueError("too small"))
