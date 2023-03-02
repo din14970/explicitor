@@ -1,0 +1,63 @@
+[tool.poetry]
+name = "explicitor"
+version = "0.1.0"
+description = "Rust-like explicit error handling for typed Python"
+authors = ["Niels Cautaerts <nielscautaerts@hotmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.0.1"
+pynvim = "^0.4.3"
+python-lsp-server = {extras = ["all"], version = "^1.7.1"}
+pylsp-mypy = "^0.6.6"
+ruff = "^0.0.253"
+ruff-lsp = "^0.0.19"
+black = "^23.1.0"
+pytest = "^7.2.1"
+pydantic = "^1.10.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+max-line-length = 88
+ignore = ["E203"]  # whitespace before : allowed
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+skip_gitignore = true
+
+[tool.mypy]
+plugins = [
+  "pydantic.mypy"
+]
+
+follow_imports = "silent"
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+ignore_missing_imports = true
+disallow_untyped_defs = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--import-mode=importlib"
+testpaths = [
+    "tests",
+]
