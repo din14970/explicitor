@@ -34,7 +34,7 @@ jobs:
           poetry config virtualenvs.create false
           poetry install --no-interaction --ansi
       - name: Run tests
-        run: pytest --cov=pymatchseries -vv
+        run: pytest --cov=explicitor -vv
       - name: Generate line coverage
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: coverage report --show-missing
